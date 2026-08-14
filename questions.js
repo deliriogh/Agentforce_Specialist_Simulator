@@ -1625,7 +1625,7 @@ window.QUESTION_BANK = [
       }
     ],
     "answer": [
-      "B"
+      "A"
     ],
     "multi": false,
     "explanation": "In Salesforce Agentforce, when previewing a prompt template, the interface displays two outputs: Resolution and Response. These terms relate to how the prompt is processed and evaluated, particularly in the context of the Einstein Trust Layer, which ensures AI safety, compliance, and auditability. The Resolution text specifically refers to the full text that is sent to the Trust Layer for processing, monitoring, and governance (Option A). This includes the constructed prompt (with grounding data, instructions, and variables) as it's submitted to the large language model (LLM), along with any Trust Layer interventions (e.g., masking, filtering) applied before or after LLM processing. It's a comprehensive view of the input/output flow that the Trust Layer captures for auditing and compliance purposes. Option B: The \" Response \" output in the preview shows the LLM's generated text based on the sample record, not the Resolution. Resolution encompasses more than just the LLM response-it includes the entire payload sent to the Trust Layer. Option C: While the Trust Layer does mask sensitive data (e.g., PII) as part of its guardrails, the Resolution text doesn't specifically isolate \" which sensitive data is masked. \" Instead, it shows the full text, including any masked portions, as processed by the Trust Layer-not a separate masking log. Option A: This is correct, as Resolution provides a holistic view of the text sent to the Trust Layer, aligning with its role in monitoring and auditing the AI interaction.",
@@ -2657,7 +2657,7 @@ window.QUESTION_BANK = [
       }
     ],
     "answer": [
-      "C"
+      "B"
     ],
     "multi": false,
     "explanation": "To begin validating that the correct fields are being masked in Einstein Trust Layer, the Agentforce Specialist should request the Einstein Generative AI Audit Data from the Security section of the Salesforce Setup menu. This audit data allows the Agentforce Specialist to see how data is being processed, including which fields are being masked, providing transparency and validation that the configuration is working as expected. Option B is correct because it allows for the retrieval of audit data that can be used to validate data masking. Option A (Flow Debugger) and Option C (Einstein Feedback) do not relate to validating field masking in the context of the Einstein Trust Layer. Salesforce Einstein Trust Layer Documentation: einstein_trust_layer_audit.htm",
@@ -3689,7 +3689,7 @@ window.QUESTION_BANK = [
       }
     ],
     "answer": [
-      "C"
+      "B"
     ],
     "multi": false,
     "explanation": "To meet Universal Containers ' goal of improving efficiency and reducing agent handling time with AI- generated responses, the best approach is to enable Service Replies, Service AI Grounding, and Grounding with Knowledge. Service Replies generates responses automatically. Service AI Grounding ensures that the AI is using relevant case data. Grounding with Knowledge ensures that responses are backed by Salesforce Knowledge articles, allowing agents to identify whether a response is coming from the LLM or Salesforce Knowledge. Option C does not include Service Replies, which is necessary for generating AI responses. Option A lacks the Grounding with Knowledge, which is essential for identifying response sources.",
@@ -4865,7 +4865,7 @@ window.QUESTION_BANK = [
       }
     ],
     "answer": [
-      "B"
+      "A"
     ],
     "multi": false,
     "explanation": "In this scenario, Universal Containers wants to bring data from unified Data Cloud objects into prompt templates, and the best way to do that is through a Data Cloudtriggered flow. This type of flow is specifically designed to trigger actions based on data changes within Salesforce Data Cloud objects. Data Cloud-triggered flows can listen for changes in the unified data model and automatically bring relevant data into the system, making it available for prompt templates. This ensures that the data is both real-time and up-to-date when used in generative AI contexts.",
@@ -5297,7 +5297,7 @@ window.QUESTION_BANK = [
       }
     ],
     "answer": [
-      "C"
+      "A"
     ],
     "multi": false,
     "explanation": "In this scenario, the Agent capability that best helps the agent is its ability to execute tasks based on available actions and answer questions using data from Knowledge articles. Agent can assist the service agent by providing relevant Knowledge articles on canceling and rebooking flights, ensuring that the agent has access to the correct steps and procedures directly within the workflow. This feature leverages the agent's existing context (the travel itinerary) and provides actionable insights or next steps from the relevant Knowledge articles to help the agent quickly resolve the customer's needs. The other options are incorrect: B refers to invoking a flow to create a Knowledge article, which is unrelated to the task of retrieving existing Knowledge articles. C focuses on generating Knowledge articles, which is not the immediate need for this situation where the agent requires guidance on existing procedures.",
@@ -5869,7 +5869,7 @@ window.QUESTION_BANK = [
       }
     ],
     "answer": [
-      "C"
+      "B"
     ],
     "multi": false,
     "explanation": "Flow Action: Salesforce provides a standard way to invoke generative AI templates or prompts within a Flow step. From the Flow Builder, you can add an \"Action\" that references the prompt template you created in Prompt Builder. o",
@@ -8461,7 +8461,7 @@ window.QUESTION_BANK = [
       }
     ],
     "answer": [
-      "C"
+      "B"
     ],
     "multi": false,
     "explanation": "For Einstein Sales Emails to generate personalized follow-up emails, it is crucial to ground the email content with the most up-to-date and accurate information. Grounding refers to connecting the AI model with real- time data. The most appropriate technique in this case is Ground with Record Merge Fields. This method ensures that the content in the emails pulls dynamic and accurate data directly from Salesforce records, such as lead or contact information, ensuring the follow-up is relevant and customized based on the specific record. Record Merge Fields ensure the generated emails are highly personalized using data like lead name, company, or other Salesforce fields directly from the records. Apex Merge Fields are typically more suited for advanced, custom logic-driven scenarios but are not the most straightforward for this use case. Automatic grounding using Draft with Einstein is a different feature where Einstein automatically drafts the email, but it does not specifically ground the content with record-specific data like Record Merge Fields.",

@@ -62,3 +62,10 @@
   border-color:#e1a5a5;
   color:#a83232;
 }
+
+.anomaly-warning{position:relative;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-left:7px;border-radius:7px;border:1px solid #e1bd67;background:#fff7df;color:#9a6800;font-size:13px;line-height:1;cursor:help;vertical-align:middle;z-index:25}
+.anomaly-warning:hover,.anomaly-warning:focus{outline:none;border-color:#c58a11;background:#ffefbd}
+.anomaly-tooltip{position:absolute;left:0;top:calc(100% + 9px);width:min(390px,78vw);display:none;flex-direction:column;gap:7px;padding:14px 15px;border:1px solid #d7c28d;border-radius:12px;background:#171a18;color:#eef2ee;box-shadow:0 16px 42px rgba(0,0,0,.28);font-size:11px;line-height:1.48;font-weight:500;text-align:left;white-space:normal;z-index:999}
+.anomaly-warning:hover .anomaly-tooltip,.anomaly-warning:focus .anomaly-tooltip{display:flex}
+.anomaly-tooltip strong{color:#ffd36d;font-size:11px}.anomaly-tooltip b{color:#fff}.anomaly-tooltip hr{width:100%;margin:3px 0;border:0;border-top:1px solid #39403b}.anomaly-tooltip small{color:#aeb8b1;font-size:9px;line-height:1.4}.review-question-label{display:inline-flex;align-items:center;flex-wrap:wrap}
+@media(max-width:720px){.anomaly-tooltip{position:fixed;left:18px;right:18px;top:92px;width:auto}}

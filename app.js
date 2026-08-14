@@ -116,7 +116,7 @@ function buildStudyCard(q,idx){
     return `<button type="button" class="${cls.join(" ")}" data-letter="${escapeHtml(opt.letter)}"><span class="option-letter">${escapeHtml(opt.letter)}</span><span class="option-text">${escapeHtml(opt.text)}</span></button>`;
   }).join("");
   const feedback=confirmed?`<div class="feedback-card${correct?"":" incorrect"}"><div class="feedback-heading"><span class="feedback-icon">${correct?"✓":"×"}</span><div><strong>${correct?"Correct!":"Not quite — you can choose another option"}</strong><span>Correct answer: ${escapeHtml(q.answer[0])}${correctOpt?` — ${escapeHtml(correctOpt.text)}`:""}</span></div></div><div class="feedback-explanation">${q.explanation?escapeHtml(q.explanation):"<em>No explanation was included for this question in the supplied source PDF.</em>"}</div></div>`:"";
-  card.innerHTML=`<div class="question-toolbar"><div><span class="question-number">Question ${idx+1}</span><span class="source-number">Bank #${q.id}</span></div><button type="button" class="flag-btn ${state.flagged[q.id]?"active":""}" data-action="flag">${state.flagged[q.id]?"★ Marked":"☆ Mark for review"}</button></div><h2 class="question-text">${escapeHtml(q.text)}</h2><p class="select-hint">Choose an option, then press <b>Select answer</b>. You can change it afterward.</p><div class="options-list">${options}</div><div class="study-answer-actions"><button type="button" class="primary-btn select-answer-btn" data-action="confirm" ${selected?"":"disabled"}>Select answer</button></div>${feedback}`;
+  card.innerHTML=`<div class="question-toolbar"><div><span class="question-number">Question ${idx+1}</span><span class="source-number">Bank #${q.id}</span>${warningMarkup(q)}</div><button type="button" class="flag-btn ${state.flagged[q.id]?"active":""}" data-action="flag">${state.flagged[q.id]?"★ Marked":"☆ Mark for review"}</button></div><h2 class="question-text">${escapeHtml(q.text)}</h2><p class="select-hint">Choose an option, then press <b>Select answer</b>. You can change it afterward.</p><div class="options-list">${options}</div><div class="study-answer-actions"><button type="button" class="primary-btn select-answer-btn" data-action="confirm" ${selected?"":"disabled"}>Select answer</button></div>${feedback}`;
   card.querySelectorAll(".option-btn").forEach(btn=>btn.addEventListener("click",()=>selectStudyChoice(q.id,btn.dataset.letter,idx)));
   card.querySelector('[data-action="confirm"]').addEventListener("click",()=>confirmStudyAnswer(q.id,idx));
   card.querySelector('[data-action="flag"]').addEventListener("click",()=>toggleStudyFlag(q.id,idx));
@@ -126,7 +126,7 @@ function buildExamCard(q,idx){
   const card=document.createElement("article");card.className="study-card exam-question-card";card.id=`study-question-${idx+1}`;card.dataset.index=idx;if(idx===state.current)card.classList.add("active-question");
   const selected=answerFor(q);
   const options=q.options.map(opt=>`<button type="button" class="option-btn${selected===opt.letter?" selected":""}" data-letter="${escapeHtml(opt.letter)}"><span class="option-letter">${escapeHtml(opt.letter)}</span><span class="option-text">${escapeHtml(opt.text)}</span></button>`).join("");
-  card.innerHTML=`<div class="question-toolbar"><div><span class="question-number">Question ${idx+1}</span><span class="source-number">Bank #${q.id}</span></div><button type="button" class="flag-btn ${state.flagged[q.id]?"active":""}" data-action="flag">${state.flagged[q.id]?"★ Marked":"☆ Mark for review"}</button></div><h2 class="question-text">${escapeHtml(q.text)}</h2><p class="select-hint">Select one answer. You can change it at any time before submitting the exam.</p><div class="options-list">${options}</div>`;
+  card.innerHTML=`<div class="question-toolbar"><div><span class="question-number">Question ${idx+1}</span><span class="source-number">Bank #${q.id}</span>${warningMarkup(q)}</div><button type="button" class="flag-btn ${state.flagged[q.id]?"active":""}" data-action="flag">${state.flagged[q.id]?"★ Marked":"☆ Mark for review"}</button></div><h2 class="question-text">${escapeHtml(q.text)}</h2><p class="select-hint">Select one answer. You can change it at any time before submitting the exam.</p><div class="options-list">${options}</div>`;
   card.querySelectorAll(".option-btn").forEach(btn=>btn.addEventListener("click",()=>selectExamChoice(q.id,btn.dataset.letter,idx)));
   card.querySelector('[data-action="flag"]').addEventListener("click",()=>toggleStudyFlag(q.id,idx));return card;
 }
@@ -194,7 +194,7 @@ function renderMissedReview(){
       : unanswered
         ? `Correct answer: ${escapeHtml(q.answer[0])}`
         : `Your answer: ${escapeHtml(chosen)} · Correct: ${escapeHtml(q.answer[0])}`;
-    item.innerHTML=`<div class="review-item-head"><span>Question ${index+1} · Bank #${q.id}</span><strong class="${statusClass}">${status}</strong></div><h3>${escapeHtml(q.text)}</h3><div class="review-answer-grid">${answers}</div><div class="review-answer-summary ${statusClass}">${answerSummary}</div><div class="review-explanation">${q.explanation?escapeHtml(q.explanation):"<em>No explanation was included in the supplied source PDF.</em>"}</div>`;
+    item.innerHTML=`<div class="review-item-head"><span class="review-question-label">Question ${index+1} · Bank #${q.id} ${warningMarkup(q)}</span><strong class="${statusClass}">${status}</strong></div><h3>${escapeHtml(q.text)}</h3><div class="review-answer-grid">${answers}</div><div class="review-answer-summary ${statusClass}">${answerSummary}</div><div class="review-explanation">${q.explanation?escapeHtml(q.explanation):"<em>No explanation was included in the supplied source PDF.</em>"}</div>`;
     els.reviewList.appendChild(item)
   });
   els.reviewList.scrollIntoView({behavior:"smooth",block:"start"})
@@ -204,6 +204,22 @@ function stopTimer(){if(timerId)clearInterval(timerId);timerId=null}
 function formatClock(s){s=Math.max(0,s);const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return[h,m,sec].map(n=>String(n).padStart(2,"0")).join(":")}
 function formatDuration(s){const m=Math.floor(s/60),sec=s%60;return`${String(m).padStart(2,"0")}:${String(sec).padStart(2,"0")}`}
 function escapeHtml(v){return String(v??"").replace(/[&<>'"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[ch]))}
+
+
+const QUESTION_WARNINGS={
+  68:{pdf:"B",explanation:"A",research:"A",researchText:"Salesforce Help describes the Resolved Prompt as the prompt with actual record data applied—the content sent to the LLM—while Response is the LLM output. This supports A.",source:"Salesforce Help — Get to Know Prompt Builder"},
+  111:{pdf:"C",explanation:"B",research:"C (closest current option)",researchText:"Current Salesforce Help says masking can be verified in Prompt Builder or with a Data 360 report, and generative AI data collection must be enabled first in Einstein Setup. None of the listed choices is an exact current match; C is the closest prerequisite, although its setup-page wording appears outdated. The simulator still grades B because the PDF explanation explicitly says B.",source:"Salesforce Help — Verify Masked Data / Set Up Einstein Generative AI Audit and Feedback"},
+  154:{pdf:"C",explanation:"B",research:"B",researchText:"Salesforce documents Service Replies as the feature that drafts recommended replies and supports grounding with Service AI Grounding and Knowledge. B best matches the full requirement.",source:"Salesforce Help — Suggest Replies with Einstein Service Replies / Ground with Knowledge"},
+  203:{pdf:"B",explanation:"A",research:"B",researchText:"Current Salesforce Help explicitly says prompt templates use a Template-Triggered Prompt Flow, and that this flow can access unified Data 360 objects. Research therefore supports B, not the PDF explanation. The simulator grades A only because the requested rule is to follow the explanation.",source:"Salesforce Help — Ground with Flow Merge Fields"},
+  221:{pdf:"C",explanation:"A",research:"A",researchText:"Salesforce provides the standard Answer Questions with Knowledge action, which answers from relevant Knowledge articles and respects the requesting user's accessible Knowledge. This supports A.",source:"Salesforce Help — Answer Questions with Knowledge"},
+  245:{pdf:"C",explanation:"B",research:"B",researchText:"Salesforce Flow Builder provides a Prompt Template core Action that returns the LLM response for a selected prompt template. This directly supports B (Flow Action).",source:"Salesforce Help — Flow Core Action: Prompt Template Actions"},
+  353:{pdf:"C",explanation:"B",research:"B",researchText:"Salesforce documents Record Merge Fields as the mechanism that connects Sales Email prompt templates to recipient, sender, and organization record data. This supports B.",source:"Salesforce Help — Ground with Record Merge Fields"}
+};
+function warningMarkup(q){
+  const w=QUESTION_WARNINGS[q.id];
+  if(!w)return "";
+  return `<span class="anomaly-warning" tabindex="0" aria-label="Source inconsistency warning">⚠<span class="anomaly-tooltip"><strong>Source inconsistency</strong><span>PDF answer key: <b>${escapeHtml(w.pdf)}</b></span><span>PDF explanation explicitly identifies: <b>${escapeHtml(w.explanation)}</b></span><span>Simulator grading: <b>${escapeHtml(w.explanation)}</b> (follows the explanation)</span><hr><strong>AI research</strong><span>Best-supported option: <b>${escapeHtml(w.research)}</b></span><span>${escapeHtml(w.researchText)}</span><small>${escapeHtml(w.source)}</small></span></span>`;
+}
 
 const ACCESS_PASSWORD="Agentforce26!";
 function initPasswordGate(){
