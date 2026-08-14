@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Agentforce Specialist practice test with section-based study mode and timed exam simulation." />
+  <title>Agentforce Specialist Practice Test</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="password-gate" class="password-gate">
+  <form id="password-form" class="password-card" autocomplete="off">
+    <div class="password-mark">AF</div>
+    <p class="eyebrow">PRIVATE PRACTICE SIMULATOR</p>
+    <h1>Agentforce Specialist</h1>
+    <p class="password-copy">Enter the access password to open the simulator.</p>
+    <label for="password-input">Password</label>
+    <div class="password-input-row">
+      <input id="password-input" type="password" placeholder="Enter password" autofocus>
+      <button id="password-toggle" type="button" class="password-toggle">Show</button>
+    </div>
+    <p id="password-error" class="password-error" aria-live="polite"></p>
+    <button type="submit" class="primary-btn password-submit">Enter simulator</button>
+  </form>
+</div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="brand" id="brand-home" type="button">
+        <span class="brand-mark">✦</span>
+        <span><strong>Agentforce Specialist</strong><small>Practice Test</small></span>
+      </button>
+
+      <div class="side-block">
+        <div class="side-heading"><span>STUDY SECTIONS</span><small><b id="bank-count">364</b> questions</small></div>
+        <div id="section-list" class="section-list"></div>
+      </div>
+
+      <button class="sidebar-exam-btn" id="sidebar-start-exam" type="button"><span>⏱</span><span><strong>Exam Mode</strong><small>60 questions · 105 min</small></span><b>→</b></button>
+
+      <div class="side-block progress-block" id="study-progress-block">
+        <span class="side-label">YOUR STUDY PROGRESS</span>
+        <div class="progress-summary">
+          <div class="progress-ring" id="progress-ring"><strong id="sidebar-progress">0%</strong></div>
+          <div><strong id="sidebar-answered">0</strong><span>answered</span><strong id="sidebar-correct">0</strong><span>correct</span></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" type="button">☰</button>
+        <div class="topbar-title"><strong id="topbar-title">Agentforce Specialist Practice Test</strong><span id="topbar-subtitle">Study by exam domain or run a full simulation.</span></div>
+        <button class="ghost-btn" id="home-top" type="button">Home</button>
+      </header>
+
+      <main>
+        <section id="home-view" class="view active">
+          <div class="welcome-card">
+            <div>
+              <span class="eyebrow">SALESFORCE CERTIFICATION PRACTICE</span>
+              <h1>Prepare with a focused, section-by-section study workflow.</h1>
+              <p>Choose one exam domain from the left to study only that block, study all <b id="hero-bank-count">364</b> questions, or launch a randomized timed simulation.</p>
+            </div>
+            <div class="welcome-stats">
+              <div><strong>364</strong><span>Question bank</span></div>
+              <div><strong>60</strong><span>Exam questions</span></div>
+              <div><strong>105 min</strong><span>Exam time</span></div>
+              <div><strong>72%</strong><span>Target</span></div>
+            </div>
+          </div>
+
+          <div class="home-grid">
+            <section class="home-panel">
+              <div class="panel-heading"><div><span class="eyebrow">STUDY MODE</span><h2>Study by section</h2></div><button id="start-study" class="secondary-btn">Study all questions</button></div>
+              <p class="panel-copy">Each block groups practice questions by the current Agentforce Specialist exam domains. Answers are checked instantly and can be changed at any time.</p>
+              <div id="section-cards" class="section-cards"></div>
+            </section>
+
+            <section class="exam-card">
+              <span class="eyebrow">EXAM MODE</span>
+              <h2>Full simulation</h2>
+              <p>60 randomized questions with randomized answer order. Correct answers remain hidden until you submit.</p>
+              <div class="exam-specs"><span><b>60</b> questions</span><span><b>105</b> minutes</span><span><b>72%</b> target</span></div>
+              <button id="start-exam" class="primary-btn wide">Start exam simulation →</button>
+            </section>
+          </div>
+        </section>
+
+        <section id="session-view" class="view">
+          <div class="session-head">
+            <div class="session-title-group"><span class="mode-chip" id="session-mode-chip">Study Mode</span><strong id="session-title">AI Agents</strong><span id="session-subtitle">Question 1 of 1</span><button id="shuffle-study" class="shuffle-btn" type="button" title="Randomize the order of questions">↻ Shuffle questions</button></div>
+            <div class="session-stats"><span><small>Progress</small><b id="metric-progress">0/0</b></span><span id="score-metric"><small>Score</small><b id="metric-score">0%</b></span><span id="timer-metric"><small>Time left</small><b id="metric-timer">01:45:00</b></span></div>
+          </div>
+          <div class="progress-track"><div id="progress-fill"></div></div>
+
+          <div class="session-layout">
+            <div id="study-feed" class="study-feed" hidden></div>
+            <article class="question-panel" id="single-question-panel">
+              <div class="question-toolbar"><div><span class="question-number" id="question-number">Question 1</span><span class="source-number" id="source-number">Bank #1</span></div><button id="flag-question" class="flag-btn">☆ Mark for review</button></div>
+              <h2 id="question-text" class="question-text"></h2>
+              <p id="select-hint" class="select-hint">Select one answer. You can change it at any time.</p>
+              <div id="options-list" class="options-list"></div>
+
+              <div id="feedback-card" class="feedback-card" hidden>
+                <div class="feedback-heading"><span id="feedback-icon" class="feedback-icon">✓</span><div><strong id="feedback-title">Correct</strong><span id="feedback-answer"></span></div></div>
+                <div id="feedback-explanation" class="feedback-explanation"></div>
+              </div>
+
+              <div class="question-actions">
+                <button id="prev-question" class="ghost-btn">← Previous</button>
+                <span class="action-spacer"></span>
+                <button id="check-answer" class="secondary-btn" hidden>Check answer</button>
+                <button id="submit-exam" class="secondary-btn">Submit exam</button>
+                <button id="next-question" class="primary-btn">Next →</button>
+              </div>
+            </article>
+
+            <aside class="navigator-panel">
+              <div class="navigator-header"><div><span>NAVIGATION</span><strong id="navigator-count">0 answered</strong></div><button id="jump-unanswered" class="mini-btn">Next blank</button></div>
+              <div class="navigator-legend"><span><i class="legend-dot answered"></i>Answered</span><span><i class="legend-dot"></i>Blank</span><span><i class="legend-dot flagged"></i>Marked</span></div>
+              <div id="navigator-grid" class="navigator-grid"></div>
+              <div class="navigator-tip">In Study Mode, changing your selection immediately updates the feedback and score.</div>
+            </aside>
+          </div>
+          <button id="exit-session" class="exit-link">← Exit session</button>
+        </section>
+
+        <section id="results-view" class="view">
+          <div class="results-wrap">
+            <div class="result-hero">
+              <div id="result-badge" class="result-badge">✓</div>
+              <span class="eyebrow">EXAM RESULT</span><h1 id="result-title">Simulation complete</h1><p id="result-message"></p>
+              <div id="score-ring" class="score-ring"><div><strong id="result-score">0%</strong><span>score</span></div></div>
+            </div>
+            <div class="result-stats"><div><span>Correct</span><strong id="result-correct">0</strong></div><div><span>Incorrect</span><strong id="result-incorrect">0</strong></div><div><span>Unanswered</span><strong id="result-unanswered">0</strong></div><div><span>Time</span><strong id="result-time">00:00</strong></div></div>
+            <div class="results-actions"><button id="review-missed" class="secondary-btn">Review exam</button><button id="new-exam" class="primary-btn">New exam</button><button id="back-home-results" class="ghost-btn">Home</button></div>
+            <div id="review-list" class="review-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="confirm-overlay" class="confirm-overlay" hidden><div class="confirm-card"><div class="confirm-icon">?</div><h2>Submit exam?</h2><p id="confirm-copy"></p><div class="confirm-actions"><button id="confirm-cancel" class="ghost-btn">Keep working</button><button id="confirm-submit" class="primary-btn">Submit exam</button></div></div></div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
